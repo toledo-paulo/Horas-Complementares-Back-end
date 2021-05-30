@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class User implements Serializable {
@@ -19,15 +21,20 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private Address address;
+	
 	public User() {	}
 
-	public User(Long id, String registration, String name, String email, String password) {
+	public User(Long id, String registration, String name, String email, String password, Address address) {
 		super();
 		this.id = id;
 		this.registration = registration;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -69,6 +76,16 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -94,8 +111,5 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
 	
 }

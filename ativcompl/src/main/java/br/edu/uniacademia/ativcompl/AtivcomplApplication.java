@@ -28,15 +28,15 @@ public class AtivcomplApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		User user1 = new User(null, "abc001", "Paulão da Regulagem", "paulao@mail.com", "12345");
-		User user2 = new User(null, "abc002", "Josiclayde da Regulagem", "josiclayd@mail.com", "54321");
-		
-		userRepository.saveAll(Arrays.asList(user1, user2));
-		
-		Address addr1 = new Address(null, "Ruas das Angélicas", "20", "N. Sra. das Graças", "Lima Duarte", user1); 
-		Address addr2 = new Address(null, "Ruas Leonides M. Campos", "74", "Centro", "Lima Duarte", user2);
+		Address addr1 = new Address(null, "Ruas das Angélicas", "20", "N. Sra. das Graças", "Lima Duarte"); 
+		Address addr2 = new Address(null, "Ruas Leonides M. Campos", "74", "Centro", "Lima Duarte");
 		
 		addressRepository.saveAll(Arrays.asList(addr1, addr2));
+		
+		User user1 = new User(null, "abc001", "Paulão da Regulagem", "paulao@mail.com", "12345", addr1);
+		User user2 = new User(null, "abc002", "Josiclayde da Regulagem", "josiclayd@mail.com", "54321", addr2);
+		
+		userRepository.saveAll(Arrays.asList(user1, user2));
 		
 	}
 
