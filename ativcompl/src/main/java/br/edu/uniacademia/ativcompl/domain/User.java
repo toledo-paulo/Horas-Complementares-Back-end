@@ -1,12 +1,15 @@
 package br.edu.uniacademia.ativcompl.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -24,6 +27,9 @@ public class User implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "address_id")
 	private Address address;
+	
+	@ManyToMany(mappedBy = "users")
+	private List<UserType> usersTypes = new ArrayList<>();
 	
 	public User() {	}
 
@@ -86,6 +92,13 @@ public class User implements Serializable {
 		this.address = address;
 	}
 	
+	public List<UserType> getUsersTypes() {
+		return usersTypes;
+	}
+
+	public void setUsersTypes(List<UserType> usersTypes) {
+		this.usersTypes = usersTypes;
+	}
 
 	@Override
 	public int hashCode() {
