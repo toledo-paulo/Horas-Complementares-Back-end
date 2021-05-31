@@ -9,67 +9,60 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class UserType implements Serializable {
+public class Student implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private String type;
-
-	@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "USER_TYPEUSER",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "userType_id")
-	)
-	private List<User> users = new ArrayList<>();
 	
-	public UserType() {}
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private Address address;
+		
+	@OneToMany(mappedBy = "student")
+	private List<Activity> activities = new ArrayList<>();
+	
+	public Student() {	}
 
-
-	public UserType(Long id, String type) {
+	public Student(Long id, User user, Address address) {
 		super();
 		this.id = id;
-		this.type = type;
+		this.user = user;
+		this.address = address;
 	}
-
-
+	
 	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-	public String getType() {
-		return type;
+	public User getUser() {
+		return user;
 	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}	
 
-	public void setType(String type) {
-		this.type = type;
+	public Address getAddress() {
+		return address;
 	}
 
-
-	public List<User> getUsers() {
-		return users;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
-
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
 
 	@Override
 	public int hashCode() {
@@ -79,7 +72,6 @@ public class UserType implements Serializable {
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -88,7 +80,7 @@ public class UserType implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserType other = (UserType) obj;
+		Student other = (Student) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -96,6 +88,5 @@ public class UserType implements Serializable {
 			return false;
 		return true;
 	}
-		
+	
 }
-

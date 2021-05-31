@@ -8,9 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class User implements Serializable {
@@ -23,24 +21,22 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	private String password;
-	
-	@OneToOne
-	@JoinColumn(name = "address_id")
-	private Address address;
-	
+				
 	@ManyToMany(mappedBy = "users")
 	private List<UserType> usersTypes = new ArrayList<>();
 	
+	@ManyToMany(mappedBy = "users")
+	private List<Course> courses = new ArrayList<>();
+	
 	public User() {	}
 
-	public User(Long id, String registration, String name, String email, String password, Address address) {
+	public User(Long id, String registration, String name, String email, String password) {
 		super();
 		this.id = id;
 		this.registration = registration;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.address = address;
 	}
 
 	public Long getId() {
@@ -82,22 +78,21 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	
+		
 	public List<UserType> getUsersTypes() {
 		return usersTypes;
 	}
 
 	public void setUsersTypes(List<UserType> usersTypes) {
 		this.usersTypes = usersTypes;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 
 	@Override
